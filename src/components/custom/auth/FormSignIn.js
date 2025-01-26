@@ -113,7 +113,14 @@ export default function FormSignIn() {
                             />
 
                             <div className="flex justify-center">
-                                <Button className="w-[200px] bg-blue-500 hover:bg-blue-400">Đăng nhập</Button>
+                                <Button
+                                    disabled={form.formState.isSubmitting}
+                                    className="w-[200px] bg-blue-500 hover:bg-blue-400"
+                                >
+                                    {
+                                        form.formState.isSubmitting ? "Đang đăng nhập" : "Đăng nhập"
+                                    }
+                                </Button>
                             </div>
                         </form>
                     </Form>
