@@ -14,21 +14,20 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 
+import { permissionRules } from "@/routes/route";
 import { cn } from "@/lib/utils";
 
 const items = [
-  {
-    title: "Thống kê",
-    url: "/admin",
-    icon: Home,
-    permissions: ["admin", "admin-blog"]
-  },
-  {
-    title: "Nhật ký",
-    url: "/admin/blog",
-    icon: Inbox,
-    permissions: ["admin-blog"]
-  },
+    {
+        title: "Thống kê",
+        url: "/admin",
+        icon: Home,
+    },
+    {
+        title: "Nhật ký",
+        url: "/admin/blog",
+        icon: Inbox,
+    },
 ];
 
 export default function AdminNavbar({ userInfo }) {
@@ -51,7 +50,7 @@ export default function AdminNavbar({ userInfo }) {
                                     key={item.title}
                                     className={cn(
                                         "",
-                                        !item.permissions.includes(userInfo?.permission) && "hidden"
+                                        permissionRules.find(perItem => perItem.path === item.url).permissions.includes(userInfo?.permission) ? "" : "hidden"
                                     )}
                                 >
                                     <SidebarMenuButton asChild>

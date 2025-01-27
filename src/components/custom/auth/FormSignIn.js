@@ -22,8 +22,10 @@ import { Button } from "@/components/ui/button";
 
 import { actionSignIn } from "@/actions/auth";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export default function FormSignIn() {
+    const [isSubmit, setIsSubmit] = useState(false);
     const form = useForm({
         defaultValues: {
             permission: "none"
@@ -31,6 +33,8 @@ export default function FormSignIn() {
     });
 
     const handleSubmit = async (values) => {
+        setIsSubmit(true);
+
         const result = await actionSignIn(
             {
                 payload: {
@@ -44,7 +48,11 @@ export default function FormSignIn() {
 
         if (result?.response) {
             toast.error(result?.response?.message);
+        } else {
+            toast.success("Đăng nhập thành công!");
         }
+
+        setIsSubmit(false);
     };   
     
     return (
@@ -114,11 +122,11 @@ export default function FormSignIn() {
 
                             <div className="flex justify-center">
                                 <Button
-                                    disabled={form.formState.isSubmitting}
+                                    disabled={isSubmit}
                                     className="w-[200px] bg-blue-500 hover:bg-blue-400"
                                 >
                                     {
-                                        form.formState.isSubmitting ? "Đang đăng nhập" : "Đăng nhập"
+                                        isSubmit ? "Đang đăng nhập" : "Đăng nhập"
                                     }
                                 </Button>
                             </div>

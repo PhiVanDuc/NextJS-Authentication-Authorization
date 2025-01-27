@@ -12,7 +12,7 @@ export default function FormSignedIn({ userInfo }) {
                 className='text-[14px] font-medium text-red-400 cursor-pointer'
                 onClick={handleClick}
             >
-                Sign Out
+                Đăng xuất
             </p>
 
             {
@@ -22,7 +22,7 @@ export default function FormSignedIn({ userInfo }) {
                     src={userInfo.image}
                     width={100}
                     height={100}
-                    className="w-[50px] h-[50px] rounded-full object-cover object-center"
+                    className="w-[50px] h-[50px] rounded-full object-cover object-center pointer-events-none"
                     {...userInfo?.blurImage}
                 /> :
                 <div className="w-[50px] h-[50px] rounded-full bg-slate-300"></div>

@@ -10,7 +10,7 @@ export const actionSignIn = async (data) => {
         data,
     );
 
-    if (!result?.response) {
+    if (result?.data) {
         cookieStore.set({
             name: "accessToken",
             value: result?.data?.accessToken,

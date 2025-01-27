@@ -9,6 +9,7 @@ import FormSignedIn from "../auth/FormSignedIn";
 import { cn } from "@/lib/utils";
 import { v4 } from "uuid";
 import { toast } from "sonner";
+import { permissionRules, publicRoute } from "@/routes/route";
 
 const navItems = [
     {
@@ -16,21 +17,18 @@ const navItems = [
         label: "Trang chủ",
         href: "/",
         pathname: "/home",
-        permissions: ["none", "admin", "admin-blog"]
     },
     {
         id: v4(),
         label: "Nhật ký",
         href: "/blog",
         pathname: "/blog",
-        permissions: ["none", "admin", "admin-blog"]
     },
     {
         id: v4(),
         label: "Quản trị",
         href: "/admin",
         pathname: "/admin",
-        permissions: ["admin", "admin-blog"]
     },
 ];
 
@@ -39,7 +37,7 @@ export default function UserNavbar({ userInfo }) {
     const finalPathname = pathname === "/" ? "/home" : pathname;
 
     const handleClick = (navItem) => {
-        if (!userInfo) {
+        if (!userInfo && !publicRoute.includes(navItem.href)) {            
             toast.warning(`Vui lòng đăng nhập trước khi vào trang '${navItem.label}'`);
         }
     }
@@ -60,7 +58,7 @@ export default function UserNavbar({ userInfo }) {
                                     className={cn(
                                         "text-[15px] font-medium transition duration-300",
                                         finalPathname.startsWith(navItem.pathname) ? "text-blue-500" : "text-neutral-500 hover:text-neutral-600",
-                                        (userInfo && !navItem.permissions.includes(userInfo?.permission)) ? "hidden" : ""
+                                        (userInfo && !permissionRules.find(item => item.path === navItem.href).permissions.includes(userInfo?.permission)) ? "hidden" : ""
                                     )}
                                     onClick={() => { handleClick(navItem) }}
                                 >
