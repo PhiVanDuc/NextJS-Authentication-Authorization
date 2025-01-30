@@ -19,6 +19,8 @@ export async function middleware(req) {
         const infoAccess = await verifyJwt(accessToken);
         userInfo = jwtDecode(accessToken);
 
+        console.log("Middleware verify infoAccess: ", infoAccess);
+
         if (!infoAccess?.valid && infoAccess?.error === 'TokenExpired') {
             delete userInfo["iat"];
             delete userInfo["exp"];

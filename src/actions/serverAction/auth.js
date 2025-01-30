@@ -19,7 +19,7 @@ export async function actionSignIn(data) {
                 path: "/",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                sameSite: 'strict'
+                secure: true
             });
 
             cookieStorage.set({
@@ -28,7 +28,7 @@ export async function actionSignIn(data) {
                 path: "/",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                sameSite: 'strict'
+                secure: true
             });
         }
 
@@ -61,7 +61,7 @@ export async function actionRefresh(data) {
                 path: "/",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                sameSite: 'strict'
+                secure: true
             });
 
             cookieStorage.set({
@@ -70,7 +70,7 @@ export async function actionRefresh(data) {
                 path: "/",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                sameSite: 'strict'
+                secure: true
             });
         }
         else {
