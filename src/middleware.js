@@ -16,13 +16,15 @@ export async function middleware(req) {
     // Xác thực
     const accessToken = cookieStorage.get('accessToken')?.value;
     const refreshToken = cookieStorage.get('refreshToken')?.value;
+    console.log("Access token: ", accessToken);
 
     if (!accessToken || !refreshToken || (!accessToken && !refreshToken)) authentication = false;
     else {
         const infoAccess = await verifyJwt(accessToken);
         userInfo = jwtDecode(accessToken);
-
-        console.log("Middleware verify infoAccess: ", infoAccess);
+        
+        console.log("Middleware user info: ", userInfo);
+        console.log("Middleware verify access token: ", infoAccess);
 
         if (!infoAccess?.valid && infoAccess?.error === 'TokenExpired') {
             delete userInfo["iat"];
