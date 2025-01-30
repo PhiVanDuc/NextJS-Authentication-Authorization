@@ -30,7 +30,7 @@ export async function middleware(req) {
             });
             authentication = refresh?.success;
         }
-        else if (!infoAccess?.valid && !infoRefresh?.valid) authentication = false;
+        else if (!infoAccess?.valid) authentication = false;
     }
 
     const isPublicRoute = publicRoute.some((publicPath) => {

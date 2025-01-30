@@ -18,7 +18,6 @@ export default function RefreshingProvider({ children }) {
         refreshing.current = true;
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
-            console.log(message);
             router.refresh();
         } finally {
             refreshing.current = false;
