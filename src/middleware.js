@@ -1,30 +1,24 @@
 import { NextResponse } from 'next/server';
 import { jwtDecode } from 'jwt-decode';
 import { verifyJwt } from './utils/jwt';
-import { cookies } from 'next/headers';
 
 import { publicRoute, permissionRules } from './routes/route';
 import { actionRefresh } from './actions/serverAction/auth';
 
 export async function middleware(req) {
-    const cookieStorage = await cookies();
     const { pathname } = req.nextUrl;
 
     let userInfo, authentication = true;
     let res = NextResponse.next();
 
     // Xác thực
-    const accessToken = cookieStorage.get('accessToken')?.value;
-    const refreshToken = cookieStorage.get('refreshToken')?.value;
-    console.log("Access token: ", accessToken);
+    const accessToken = req.cookies.get('accessToken')?.value;
+    const refreshToken = req.cookies.get('refreshToken')?.value;
 
     if (!accessToken || !refreshToken || (!accessToken && !refreshToken)) authentication = false;
     else {
         const infoAccess = await verifyJwt(accessToken);
         userInfo = jwtDecode(accessToken);
-        
-        console.log("Middleware user info: ", userInfo);
-        console.log("Middleware verify access token: ", infoAccess);
 
         if (!infoAccess?.valid && infoAccess?.error === 'TokenExpired') {
             delete userInfo["iat"];

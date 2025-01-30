@@ -1,3 +1,5 @@
+"server-only"
+
 import { jwtVerify } from "jose";
 
 const TOKEN_KEY = process.env.TOKEN_KEY;

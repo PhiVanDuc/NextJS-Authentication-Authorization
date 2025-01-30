@@ -1,3 +1,4 @@
+import Data from '@/components/custom/page/blog/Data';
 import React from 'react'
 
 export default function page() {
@@ -8,6 +9,8 @@ export default function page() {
             <p>Đây sẽ là trang thống kê nơi tất cả quản trị viên có thể truy cập.</p>
 
             <p>Nhưng người dùng thông thường sẽ không thể vào được trang.</p>
+
+            <Data />
         </div>
     )
 }

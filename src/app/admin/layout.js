@@ -1,21 +1,9 @@
 import AdminNavbar from '@/components/custom/navbar/AdminNavbar';
 import { SidebarProvider } from '@/components/ui/sidebar';
-
-import { cookies } from 'next/headers';
-import { jwtDecode } from 'jwt-decode';
+import { getServerSession } from '@/utils/session';
 
 export default async function AdminLayout({ children }) {
-    const cookieStore = await cookies();
-    let userInfo;
-
-    try {
-        const accessToken = cookieStore.get("accessToken")?.value;
-        userInfo = accessToken
-            ?
-            { ...jwtDecode(accessToken) }
-            : null;
-    }
-    catch (err) { userInfo = null }
+    const userInfo = await getServerSession();
 
     return (
         <SidebarProvider>
