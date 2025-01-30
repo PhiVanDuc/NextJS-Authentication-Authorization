@@ -19,13 +19,10 @@ import {
   } from "@/components/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
-
-import { actionSignIn } from "@/actions/auth";
-import { toast } from "sonner";
-import { useState } from "react";
+import { actionSignIn } from "@/actions/serverAction/auth";
+import fetchClient from "@/actions/fetchClient";
 
 export default function FormSignIn() {
-    const [isSubmit, setIsSubmit] = useState(false);
     const form = useForm({
         defaultValues: {
             permission: "none"
@@ -33,26 +30,18 @@ export default function FormSignIn() {
     });
 
     const handleSubmit = async (values) => {
-        setIsSubmit(true);
-
-        const result = await actionSignIn(
-            {
-                payload: {
-                    fullname: "Phí Văn Đức",
-                    image: "https://images.unsplash.com/photo-1737559217439-a5703e9b65cb?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    ...values,
-                },
-                time: "10s",
-            }
-        );
-
-        if (result?.response) {
-            toast.error(result?.response?.message);
-        } else {
-            toast.success("Đăng nhập thành công!");
-        }
-
-        setIsSubmit(false);
+        await fetchClient(async () => {
+            return actionSignIn(
+                {
+                    payload: {
+                        fullname: "Phí Văn Đức",
+                        image: "https://images.unsplash.com/photo-1736185597807-371cae1c7e4e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        ...values
+                    },
+                    time: "10s"
+                }
+            );
+        })
     };   
     
     return (
@@ -122,12 +111,9 @@ export default function FormSignIn() {
 
                             <div className="flex justify-center">
                                 <Button
-                                    disabled={isSubmit}
                                     className="w-[200px] bg-blue-500 hover:bg-blue-400"
                                 >
-                                    {
-                                        isSubmit ? "Đang đăng nhập" : "Đăng nhập"
-                                    }
+                                    Đăng nhập
                                 </Button>
                             </div>
                         </form>

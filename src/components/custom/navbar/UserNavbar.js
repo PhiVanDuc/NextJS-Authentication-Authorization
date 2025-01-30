@@ -8,8 +8,8 @@ import FormSignedIn from "../auth/FormSignedIn";
 
 import { cn } from "@/lib/utils";
 import { v4 } from "uuid";
-import { toast } from "sonner";
 import { permissionRules, publicRoute } from "@/routes/route";
+import { toast } from "sonner";
 
 const navItems = [
     {

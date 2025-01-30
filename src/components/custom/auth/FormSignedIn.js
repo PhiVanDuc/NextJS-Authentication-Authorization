@@ -1,4 +1,4 @@
-import { actionSignOut } from "@/actions/auth";
+import { actionSignOut } from "@/actions/serverAction/auth";
 import Image from "next/image";
 
 export default function FormSignedIn({ userInfo }) {
@@ -15,18 +15,13 @@ export default function FormSignedIn({ userInfo }) {
                 Đăng xuất
             </p>
 
-            {
-                userInfo?.image ?
-                <Image
-                    alt="Avatar"
-                    src={userInfo.image}
-                    width={100}
-                    height={100}
-                    className="w-[50px] h-[50px] rounded-full object-cover object-center pointer-events-none"
-                    {...userInfo?.blurImage}
-                /> :
-                <div className="w-[50px] h-[50px] rounded-full bg-slate-300"></div>
-            }
+            <Image
+                src={userInfo?.image}
+                alt="Avatar"
+                width={500}
+                height={500}
+                className="w-[50px] h-[50px] rounded-full bg-slate-100 object-cover object-center"
+            />
         </div>
     )
 }

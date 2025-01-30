@@ -30,7 +30,7 @@ const items = [
     },
 ];
 
-export default function AdminNavbar({ userInfo }) {
+export default function AdminNavbar() {
     return (
         <Sidebar>
             <SidebarHeader>
@@ -48,10 +48,10 @@ export default function AdminNavbar({ userInfo }) {
                             {items.map((item) => (
                                 <SidebarMenuItem
                                     key={item.title}
-                                    className={cn(
-                                        "",
-                                        permissionRules.find(perItem => perItem.path === item.url).permissions.includes(userInfo?.permission) ? "" : "hidden"
-                                    )}
+                                    // className={cn(
+                                    //     "",
+                                    //     permissionRules.find(perItem => perItem.path === item.url).permissions.includes(userInfo?.permission) ? "" : "hidden"
+                                    // )}
                                 >
                                     <SidebarMenuButton asChild>
                                         <Link href={item.url} className="flex items-center gap-x-[10px] text-[14px] text-neutral-600">

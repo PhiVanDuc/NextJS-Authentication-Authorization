@@ -1,27 +1,42 @@
 import { NextResponse } from 'next/server';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
+import { verifyJwt } from './utils/jwt'; 
 
 import { publicRoute, permissionRules } from './routes/route';
+import { actionRefresh } from './actions/serverAction/auth';
 
-export function middleware(req) {
+export async function middleware(req) {
     const { pathname } = req.nextUrl;
-    let userInfo;
-    let authentication = true;
+    let userInfo, authentication = true;
+    let res = NextResponse.next();
 
+    // Xác thực
     const accessToken = req.cookies.get('accessToken')?.value;
     const refreshToken = req.cookies.get('refreshToken')?.value;
 
     if (!accessToken || !refreshToken || (!accessToken && !refreshToken)) authentication = false;
     else {
-        try { userInfo = jwtDecode(accessToken) }
-        catch(err) { authentication = false }
+        const infoAccess = await verifyJwt(accessToken);
+        userInfo = jwtDecode(accessToken);
+
+        if (!infoAccess?.valid && infoAccess?.error === 'TokenExpired') {
+            delete userInfo["iat"];
+            delete userInfo["exp"];
+
+            const refresh = await actionRefresh({
+                payload: userInfo,
+                time: '10s',
+                refreshToken
+            });
+            authentication = refresh?.success;
+        }
+        else if (!infoAccess?.valid && !infoRefresh?.valid) authentication = false;
     }
 
     const isPublicRoute = publicRoute.some((publicPath) => {
         return pathname === publicPath;
     });
 
-    let res;
     if (!authentication) {
         if (!isPublicRoute) res = NextResponse.redirect(new URL('/', req.url));
         else res = NextResponse.next();
@@ -31,13 +46,15 @@ export function middleware(req) {
         return res;
     }
 
+    // Phân quyền
     const permissionRule = permissionRules.find(item => pathname.startsWith(item.path));
     if (permissionRule) {
         const check = permissionRule.permissions.includes(userInfo.permission);
         if (!check) return NextResponse.redirect(new URL('/', req.url));
     }
 
-    return NextResponse.next();
+    // Thành công
+    return res;
 }
 
 export const config = {
