@@ -1,8 +1,8 @@
 import { fetchProtect } from "@/actions/utils";
 import ServerError from "../../error/ServerError";
 
-export default async function Data() {
-    const blogs = await fetchProtect.get('/blogs', { cache: "no-cache" });
+export default async function Data({ url }) {
+    const blogs = await fetchProtect.get(url, { cache: "no-cache" });
     if (blogs?.status === 410 || blogs?.status === 401) {
         return <ServerError error={`${blogs?.status} || ${blogs.message}`} />
     }

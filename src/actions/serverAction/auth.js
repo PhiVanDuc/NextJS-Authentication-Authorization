@@ -61,7 +61,8 @@ export async function actionRefresh(data) {
                 path: "/",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                secure: true
+                secure: true,
+                sameSite: 'lax',
             });
 
             cookieStorage.set({
@@ -70,13 +71,15 @@ export async function actionRefresh(data) {
                 path: "/",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
-                secure: true
+                secure: true,
+                sameSite: 'lax',
             });
         }
         else {
             cookieStorage.delete("accessToken");
             cookieStorage.delete("refreshToken");
         }
+        
         return result;
     }
     catch(error) {

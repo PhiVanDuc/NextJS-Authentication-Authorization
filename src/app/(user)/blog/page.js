@@ -9,7 +9,11 @@ export default function page() {
 
             <p>Những người dùng chưa đăng nhập sẽ không thể truy cập được trang này.</p>
 
-            <Data />
+            <Data url="/blogs" />
+            <Data url="/blogs2" />
+            <Data url="/blogs3" />
+            <Data url="/blogs4" />
+            <Data url="/blogs5" />
         </div>
     )
 }

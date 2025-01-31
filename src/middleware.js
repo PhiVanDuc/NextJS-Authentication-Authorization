@@ -24,12 +24,11 @@ export async function middleware(req) {
             delete userInfo["iat"];
             delete userInfo["exp"];
 
-            const refresh = await actionRefresh({
+            await actionRefresh({
                 payload: userInfo,
                 time: '10s',
                 refreshToken
             });
-            authentication = refresh?.success;
         }
         else if (!infoAccess?.valid) authentication = false;
     }

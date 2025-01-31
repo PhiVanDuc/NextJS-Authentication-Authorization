@@ -14,7 +14,7 @@ export default function RefreshingProvider({ children }) {
 
     const refresh = useCallback(async (message) => {
         if (refreshing.current) return;
-    
+
         refreshing.current = true;
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
