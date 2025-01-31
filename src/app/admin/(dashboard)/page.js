@@ -1,5 +1,4 @@
 import Data from '@/components/custom/page/blog/Data';
-import React from 'react'
 
 export default function page() {
     return (
@@ -10,7 +9,7 @@ export default function page() {
 
             <p>Nhưng người dùng thông thường sẽ không thể vào được trang.</p>
 
-            <Data />
+            <Data url="/blogs" />
         </div>
     )
 }

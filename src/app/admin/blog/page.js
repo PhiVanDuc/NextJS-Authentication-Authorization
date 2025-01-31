@@ -9,7 +9,7 @@ export default function page() {
 
             <p>Nhưng người dùng thông thường hoặc quản trị viên không có vai trò quản lý nhật ký sẽ không thể vào được trang.</p>
 
-            <Data />
+            <Data url="/blogs" />
         </div>
     )
 }
