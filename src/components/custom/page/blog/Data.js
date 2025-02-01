@@ -5,6 +5,10 @@ export default async function Data({ url }) {
     const blogs = await fetchProtect.get(url, { cache: "no-cache" });
     if (blogs?.status === 410 || blogs?.status === 401) {
         return <ServerError error={`${blogs?.status} || ${blogs.message}`} />
+    } else if (!blogs?.success) {
+        return (
+            <div>Error: {blogs?.message}</div>
+        )
     }
 
     return (

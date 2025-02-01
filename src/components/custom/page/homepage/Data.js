@@ -2,6 +2,9 @@ import { fetchPublic } from "@/actions/utils"
 
 export default async function Data() {
     const blogs = await fetchPublic.get('/blogs-public', { cache: "no-cache" });
+    if (!blogs.success) return (
+        <div>Error: {blogs?.message}</div>
+    )
 
     return (
         <div className="space-y-[20px]">
@@ -12,7 +15,7 @@ export default async function Data() {
                     blogs?.data?.posts?.map((post) => {
                         return (
                             <p
-                                key={post.title + '1'}
+                                key={post?.title + '1'}
                                 className="p-[20px] rounded-[10px] bg-slate-100 hover:bg-slate-200 transition duration-300 cursor-pointer">{post?.title}</p>
                         )
                     })
